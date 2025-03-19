@@ -1,0 +1,6 @@
+@SemestrTwoAPI_HostAddress = http://localhost:5278
+
+GET {{SemestrTwoAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
