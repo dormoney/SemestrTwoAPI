@@ -21,7 +21,6 @@
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Requests\" />
-    <Folder Include="Model\" />
     <Folder Include="DataBaseContext\" />
   </ItemGroup>
 
