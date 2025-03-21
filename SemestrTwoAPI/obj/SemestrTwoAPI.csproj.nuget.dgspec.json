@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\redmi\\source\\repos\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj": {}
+    "C:\\Users\\redmi\\Documents\\GitHub\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\redmi\\source\\repos\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj": {
+    "C:\\Users\\redmi\\Documents\\GitHub\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\redmi\\source\\repos\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj",
+        "projectUniqueName": "C:\\Users\\redmi\\Documents\\GitHub\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj",
         "projectName": "SemestrTwoAPI",
-        "projectPath": "C:\\Users\\redmi\\source\\repos\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj",
+        "projectPath": "C:\\Users\\redmi\\Documents\\GitHub\\SemestrTwoAPI\\SemestrTwoAPI\\SemestrTwoAPI.csproj",
         "packagesPath": "C:\\Users\\redmi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\redmi\\source\\repos\\SemestrTwoAPI\\SemestrTwoAPI\\obj\\",
+        "outputPath": "C:\\Users\\redmi\\Documents\\GitHub\\SemestrTwoAPI\\SemestrTwoAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,20 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
