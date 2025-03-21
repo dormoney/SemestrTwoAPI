@@ -20,8 +20,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Requests\" />
-    <Folder Include="DataBaseContext\" />
   </ItemGroup>
 
 </Project>

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SemestrTwoAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a52f20a3e9bca99fae2272888b52b0d77d82448")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cda22db56d653f2a0bcf62e40f8a3ae26728f032")]
 [assembly: System.Reflection.AssemblyProductAttribute("SemestrTwoAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SemestrTwoAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

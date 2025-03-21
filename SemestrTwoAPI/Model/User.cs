@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SemestrTwoAPI.Model
 {
-    [Index(nameof(User.Email), IsUnique = true)]
     public class User
     {
         [Key]
@@ -13,6 +12,8 @@ namespace SemestrTwoAPI.Model
         public string Email { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Password { get; set; } 
+        [Required]
+        public string Password { get; set; }
+        public bool _isAdmin { get; set; } = false;
     }
 }
