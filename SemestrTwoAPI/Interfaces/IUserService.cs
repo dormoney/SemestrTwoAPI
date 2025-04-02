@@ -1,13 +1,15 @@
 ﻿using SemestrTwoAPI.Model;
+using SemestrTwoAPI.Requests;
 
 namespace SemestrTwoAPI.Interfaces
 {
     public interface IUserService
     {
         Task<List<User>> GetAllUsers();
-        Task<User> GetUserById(int id);
-        Task<User> CreateUser(User user);
-        Task<User> UpdateUser(User user);
-        Task<User> DeleteUser(int id);
+        Task<User> GetUserByEmail(string email);
+        Task<bool> Register(User user);
+        Task<string> Login(LoginRequest request);
+        Task<bool> UpdateUser(User user);
+        Task<bool> DeleteUser(int id);
     }
 }

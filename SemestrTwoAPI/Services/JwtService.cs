@@ -1,38 +1,36 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using SemestrTwoAPI.Interfaces;
+using SemestrTwoAPI.Model;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace SemestrTwoAPI.Services
 {
-    public class JwtService
+    public class JwtService : IJwtService
     {
-        private readonly IConfiguration _configuration;
+        private readonly JwtOptions _options;
 
-        public JwtService(IConfiguration configuration)
+        public JwtService(IOptions<JwtOptions> options)
         {
-            _configuration = configuration;
+            _options = options.Value;
         }
-
-        public string GenerateToken(string username, string role)
+        public string GenerateToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            Claim[] claims = [new("name", user.Name.ToString())];
 
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.Role, role)
-            };
+            var signingCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key)), SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: credentials);
+                signingCredentials: signingCredentials,
+                expires: DateTime.UtcNow.AddHours(5)
+                );
+            var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenValue;
         }
     }
 }

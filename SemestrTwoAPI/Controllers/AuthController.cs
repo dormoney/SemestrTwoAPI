@@ -1,9 +1,11 @@
 ﻿using SemestrTwoAPI.Requests;
 using Microsoft.AspNetCore.Mvc;
 using SemestrTwoAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SemestrTwoAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -19,15 +21,7 @@ namespace SemestrTwoAPI.Controllers
         public IActionResult Login([FromBody] LoginRequest request)
         {
             // Здесь должна быть проверка логина и пароля в базе данных.
-            // Для примера допустим, что пользователь "admin" существует.
-            if (request.Email == "admin" && request.Password == "admin123")
-            {
-                // Генерируем токен (роль "Admin" для примера)
-                var token = _jwtService.GenerateToken(request.Email, "Admin");
-                return Ok(new { Token = token });
-            }
-
-            return Unauthorized("Неверный логин или пароль");
+            return null;
         }
     }
 }
