@@ -11,12 +11,10 @@ namespace SemestrTwoAPI.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private HttpContext _context;
 
-        public UserController(IUserService userService, HttpContext context)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _context = context;
         }
 
 
@@ -42,8 +40,8 @@ namespace SemestrTwoAPI.Controllers
             var token = await _userService.Login(request);
             if (token == "false") return BadRequest("Failed to login! Check your email and password");
 
-            _context.Response.Cookies.Append("jwt", token);
-            return Ok();
+            HttpContext.Response.Cookies.Append("jwt", token);
+            return Ok(token);
         }
     }
 }

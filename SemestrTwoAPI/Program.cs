@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
 
+builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
 
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<ContextDB>(options =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+
 
 var app = builder.Build();
 

@@ -11,10 +11,12 @@ namespace SemestrTwoAPI.Services
     {
         private readonly ContextDB _context;
         private readonly IJwtService _jwtService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(ContextDB context, IJwtService jwtService) {
+        public UserService(ContextDB context, IJwtService jwtService, IHttpContextAccessor httpContextAccessor) {
             _context = context; 
             _jwtService = jwtService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<List<User>> GetAllUsers()
