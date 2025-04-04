@@ -30,10 +30,16 @@ namespace SemestrTwoAPI.Services
             return user;
         }
 
-        public async Task<bool> Register(User user)
+        public async Task<bool> Register(RegisterRequest request)
         {
-            if (await _context.Users.AnyAsync(o => o.Email == user.Email)) return false;
-            _context.Users.Add(user);
+            if (await _context.Users.AnyAsync(o => o.Email == request.Email)) return false;
+            _context.Users.Add(new User 
+            {
+                Email = request.Email,
+                Name = request.Name,
+                Description = request.Description,
+                Password = request.Password
+            });
             await _context.SaveChangesAsync();
             return true;
         }

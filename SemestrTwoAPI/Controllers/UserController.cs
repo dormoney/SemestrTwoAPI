@@ -19,18 +19,20 @@ namespace SemestrTwoAPI.Controllers
 
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(User user)
+        public async Task<IActionResult> Register([FromQuery] RegisterRequest request)
         {
-            var result = await _userService.Register(user);
+            var result = await _userService.Register(request);
             if (!result) return BadRequest("Email already registered!");
-            return Ok();
+            return Ok("User found!");
         }
 
+        [Authorize]
         [HttpGet("GetByEmail/{email}")]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
             var user = await _userService.GetUserByEmail(email);
             if (user == null) return BadRequest("User with this email does not exist!");
+
             return Ok(user);
         }
 
@@ -41,7 +43,15 @@ namespace SemestrTwoAPI.Controllers
             if (token == "false") return BadRequest("Failed to login! Check your email and password");
 
             HttpContext.Response.Cookies.Append("jwt", token);
-            return Ok(token);
+            return Ok("Successfully logged in!");
+        }
+
+        [HttpGet("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Response.Cookies.Delete("jwt");
+
+            return Ok("Successfully logged out!");
         }
     }
 }

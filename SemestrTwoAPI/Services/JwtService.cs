@@ -26,7 +26,7 @@ namespace SemestrTwoAPI.Services
             var token = new JwtSecurityToken(
                 claims: claims,
                 signingCredentials: signingCredentials,
-                expires: DateTime.UtcNow.AddHours(5)
+                expires: DateTime.UtcNow.AddMinutes(30)
                 );
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
