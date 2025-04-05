@@ -38,7 +38,8 @@ namespace SemestrTwoAPI.Services
                 Email = request.Email,
                 Name = request.Name,
                 Description = request.Description,
-                Password = request.Password
+                Password = request.Password,
+                _isAdmin = request._isAdmin
             });
             await _context.SaveChangesAsync();
             return true;
