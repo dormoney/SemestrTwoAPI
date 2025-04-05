@@ -23,7 +23,7 @@ namespace SemestrTwoAPI.Controllers
         {
             var result = await _userService.Register(request);
             if (!result) return BadRequest("Email already registered!");
-            return Ok("User found!");
+            return Ok("Successfully registered!");
         }
 
         [Authorize]

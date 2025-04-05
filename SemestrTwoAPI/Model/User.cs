@@ -10,5 +10,6 @@ namespace SemestrTwoAPI.Model
         public string Name { get; set; }
         public string Description { get; set; }
         [Required] public string Password { get; set; }
+        public string _isAdmin { get; set; } = "user";
     }
 }
