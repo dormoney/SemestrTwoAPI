@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SemestrTwoAPI.Interfaces;
 using SemestrTwoAPI.Model;
 using SemestrTwoAPI.Requests;
+using System.Security.Claims;
 
 namespace SemestrTwoAPI.Controllers
 {
@@ -17,23 +18,12 @@ namespace SemestrTwoAPI.Controllers
             _userService = userService;
         }
 
-
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromQuery] RegisterRequest request)
         {
             var result = await _userService.Register(request);
             if (!result) return BadRequest("Email already registered!");
             return Ok("Successfully registered!");
-        }
-
-        [Authorize]
-        [HttpGet("GetByEmail/{email}")]
-        public async Task<IActionResult> GetUserByEmail(string email)
-        {
-            var user = await _userService.GetUserByEmail(email);
-            if (user == null) return BadRequest("User with this email does not exist!");
-
-            return Ok(user);
         }
 
         [HttpGet("Login")]
@@ -46,12 +36,37 @@ namespace SemestrTwoAPI.Controllers
             return Ok("Successfully logged in!");
         }
 
+        [Authorize]
         [HttpGet("Logout")]
         public async Task<IActionResult> Logout()
         {
             HttpContext.Response.Cookies.Delete("jwt");
 
             return Ok("Successfully logged out!");
+        }
+
+        [Authorize]
+        [HttpPut("UpdateAccount")]
+        public async Task<IActionResult> UpdateAccount([FromQuery] UpdateRequest request)
+        {
+            var userId = User.FindFirst("Id")?.Value;
+            if (userId == null) return BadRequest("Чтобы обновить аккаунт нужно сначала авторизоваться");
+
+            var result = await _userService.UpdateAccount(userId, request);
+            if (!result) return BadRequest("Пользователь с таким ID не был найден либо не существует!");
+            return Ok("Account info successfuly updated!");
+        }
+
+        [Authorize]
+        [HttpDelete("DeleteAccount")]
+        public async Task<IActionResult> DeleteUser()
+        {
+            var userId = User.FindFirst("Id")?.Value;
+            if (userId == null) return BadRequest("Чтобы удалить аккаунт нужно сначала авторизоваться");
+
+            var result = await _userService.DeleteAccount(userId);
+            if (!result) return BadRequest("Пользователь с таким ID не был найден либо не существует!");
+            return Ok("You deleted an account( We wish to see you later!");
         }
     }
 }

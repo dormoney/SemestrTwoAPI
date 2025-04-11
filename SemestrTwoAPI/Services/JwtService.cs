@@ -18,7 +18,10 @@ namespace SemestrTwoAPI.Services
         }
         public string GenerateToken(User user)
         {
-            Claim[] claims = [new("name", user.Name.ToString())];
+            Claim[] claims = [
+                new ("Id", user.Id.ToString()),
+                new (ClaimTypes.Role, user.Role)
+            ];
 
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key)), SecurityAlgorithms.HmacSha256);
@@ -26,7 +29,7 @@ namespace SemestrTwoAPI.Services
             var token = new JwtSecurityToken(
                 claims: claims,
                 signingCredentials: signingCredentials,
-                expires: DateTime.UtcNow.AddMinutes(30)
+                expires: DateTime.UtcNow.AddHours(2)
                 );
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SemestrTwoAPI.DataBaseContext;
 using SemestrTwoAPI.Interfaces;
 using SemestrTwoAPI.Model;
 using SemestrTwoAPI.Requests;
+using System.Security.Claims;
 
 namespace SemestrTwoAPI.Services
 {
@@ -21,7 +23,8 @@ namespace SemestrTwoAPI.Services
 
         public async Task<List<User>> GetAllUsers()
         {
-            return null;
+            var users = await _context.Users.ToListAsync();
+            return users;
         }
 
         public async Task<User> GetUserByEmail(string email)
@@ -39,7 +42,7 @@ namespace SemestrTwoAPI.Services
                 Name = request.Name,
                 Description = request.Description,
                 Password = request.Password,
-                _isAdmin = request._isAdmin
+                Role = request.Role
             });
             await _context.SaveChangesAsync();
             return true;
@@ -56,13 +59,57 @@ namespace SemestrTwoAPI.Services
             return token;
         }
 
-        public async Task<bool> UpdateUser(User user)
+        public async Task<bool> UpdateUser(int id, UpdateRequest request)
         {
+            if (request == null || id == 0) return false;
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return false;
+
+            user.Email = request.Email;
+            user.Name = request.Name;
+            user.Description = request.Description;
+            user.Password = request.Password;
+
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateAccount(string id, UpdateRequest request)
+        {
+            if (request == null || id == "") return false;
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id);
+            if (user == null) return false;
+
+            user.Email = request.Email;
+            user.Name = request.Name;
+            user.Description = request.Description;
+            user.Password = request.Password;
+
+            _context.Update(user);
+            await _context.SaveChangesAsync();
             return true;
         }
 
         public async Task<bool> DeleteUser(int id)
         {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return false;
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteAccount(string id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id);
+            if (user == null) return false;
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
             return true;
         }
     }

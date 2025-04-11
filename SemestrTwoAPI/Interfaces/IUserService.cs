@@ -1,5 +1,6 @@
 ﻿using SemestrTwoAPI.Model;
 using SemestrTwoAPI.Requests;
+using System.Security.Claims;
 
 namespace SemestrTwoAPI.Interfaces
 {
@@ -9,7 +10,9 @@ namespace SemestrTwoAPI.Interfaces
         Task<User> GetUserByEmail(string email);
         Task<bool> Register(RegisterRequest re);
         Task<string> Login(LoginRequest request);
-        Task<bool> UpdateUser(User user);
+        Task<bool> UpdateUser(int id, UpdateRequest user);
+        Task<bool> UpdateAccount(string id, UpdateRequest user);
         Task<bool> DeleteUser(int id);
+        Task<bool> DeleteAccount(string id);
     }
 }

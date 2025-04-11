@@ -1,15 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SemestrTwoAPI.Model
+namespace SemestrTwoAPI.Requests
 {
-    public class User
+    public class UpdateRequest
     {
-        [Key] public int Id { get; set; }
         [Required][EmailAddress] public string Email { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         [Required] public string Password { get; set; }
-        public string Role { get; set; }
     }
 }
