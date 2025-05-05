@@ -21,16 +21,49 @@ namespace SemestrTwoAPI.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
             var users = await _context.Users.ToListAsync();
-            return users;
+
+            return new OkObjectResult(new
+            {
+                data = new { users = users },
+                response = "Success",
+                status = true
+            });
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<IActionResult> GetUserByEmail(string email)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(_email => _email.Email == email);
-            return user;
+            if (string.IsNullOrEmpty(email))
+            {
+                return new BadRequestObjectResult(new
+                {
+                    data = new { users = new { } },
+                    response = "Email string is empty",
+                    status = true
+                });
+            }
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(_email => _email.Email == email);
+
+                return new OkObjectResult(new
+                {
+                    data = new { user = user },
+                    response = "Success",
+                    status = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult( new
+                {
+                    data = new { users = new { } },
+                    response = $"Внутренняя ошибка сервера: {ex}",
+                    status = true
+                }) { StatusCode = 500 };
+            }
         }
 
         public async Task<bool> Register(RegisterRequest request)

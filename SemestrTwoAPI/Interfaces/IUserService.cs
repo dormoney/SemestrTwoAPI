@@ -1,4 +1,5 @@
-﻿using SemestrTwoAPI.Model;
+﻿using Microsoft.AspNetCore.Mvc;
+using SemestrTwoAPI.Model;
 using SemestrTwoAPI.Requests;
 using System.Security.Claims;
 
@@ -6,13 +7,13 @@ namespace SemestrTwoAPI.Interfaces
 {
     public interface IUserService
     {
-        Task<List<User>> GetAllUsers();
-        Task<User> GetUserByEmail(string email);
-        Task<bool> Register(RegisterRequest request);
-        Task<string> Login(LoginRequest request);
-        Task<bool> UpdateUser(int id, UpdateRequest user);
-        Task<bool> UpdateAccount(string id, UpdateRequest user);
-        Task<bool> DeleteUser(int id);
-        Task<bool> DeleteAccount(string id);
+        Task<IActionResult> GetAllUsers();
+        Task<IActionResult> GetUserByEmail(string email);
+        Task<IActionResult> Register(RegisterRequest request);
+        Task<IActionResult> Login(LoginRequest request);
+        Task<IActionResult> UpdateUser(int id, UpdateRequest user);
+        Task<IActionResult> UpdateAccount(string id, UpdateRequest user);
+        Task<IActionResult> DeleteUser(int id);
+        Task<IActionResult> DeleteAccount(string id);
     }
 }
