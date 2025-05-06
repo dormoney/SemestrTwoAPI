@@ -21,9 +21,31 @@ namespace SemestrTwoAPI.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers(int onPage, int page)
         {
             var users = await _context.Users.ToListAsync();
+
+            if (onPage == 0 || onPage >= users.Count()) return Ok(users);
+
+            if (onPage < 0 || page <= 0) return BadRequest("Разделение страниц по отрицательным данным невозможно или страница не может быть нулевой!");
+
+            double pageCount = Math.Round((double)users.Count() / onPage);
+            if (page > pageCount) return BadRequest($"Вы выбрали несуществующую страницу! При делении страниц по {onPage} объекта всего получилось {pageCount} страниц!");
+
+            var paginatedUsers = new List<User>();
+            for (int i = 0; i < onPage;)
+            {
+                if (page == 1) paginatedUsers.Add(users[i]);
+                else
+                {
+                    if ((onPage * (page - 1) + i) < users.Count())
+                    {
+                        paginatedUsers.Add(users[(onPage * (page - 1) + i)]);
+                    }
+                    else break;
+                }
+                i++;
+            }
 
             return new OkObjectResult(new
             {
@@ -39,14 +61,24 @@ namespace SemestrTwoAPI.Services
             {
                 return new BadRequestObjectResult(new
                 {
-                    data = new { users = new { } },
+                    data = new { users = new User { } },
                     response = "Email string is empty",
-                    status = true
+                    status = false
                 });
             }
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(_email => _email.Email == email);
+
+                if (user == null)
+                {
+                    return new BadRequestObjectResult(new
+                    {
+                        data = new { users = new User { } },
+                        response = "User with this email does not exist!",
+                        status = false
+                    });
+                }
 
                 return new OkObjectResult(new
                 {

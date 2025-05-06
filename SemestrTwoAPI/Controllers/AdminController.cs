@@ -21,16 +21,13 @@ namespace SemestrTwoAPI.Controllers
         [HttpGet("GetByEmail/{email}")]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
-            var user = await _userService.GetUserByEmail(email);
-            if (user == null) return BadRequest("User with this email does not exist!");
-
-            return Ok(user);
+            return await _userService.GetUserByEmail(email); 
         }
 
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers(int onPage, int page)
         {
-            var users = await _userService.GetAllUsers();
+            var users = await _userService.GetAllUsers(onPage, page);
             if (onPage == 0 || onPage >= users.Count()) return Ok(users);
 
             if (onPage < 0 || page <= 0) return BadRequest("Разделение страниц по отрицательным данным невозможно или страница не может быть нулевой!");

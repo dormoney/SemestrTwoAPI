@@ -7,7 +7,7 @@ namespace SemestrTwoAPI.Interfaces
 {
     public interface IUserService
     {
-        Task<IActionResult> GetAllUsers();
+        Task<IActionResult> GetAllUsers(int onPage, int page);
         Task<IActionResult> GetUserByEmail(string email);
         Task<IActionResult> Register(RegisterRequest request);
         Task<IActionResult> Login(LoginRequest request);
