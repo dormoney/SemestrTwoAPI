@@ -25,12 +25,27 @@ namespace SemestrTwoAPI.Services
         {
             var users = await _context.Users.ToListAsync();
 
-            if (onPage == 0 || onPage >= users.Count()) return Ok(users);
+            if (onPage == 0 || onPage >= users.Count()) return new OkObjectResult(new
+            {
+                data = new { users = users },
+                response = "Success",
+                status = true
+            });
 
-            if (onPage < 0 || page <= 0) return BadRequest("Разделение страниц по отрицательным данным невозможно или страница не может быть нулевой!");
+            if (onPage < 0 || page <= 0) return new BadRequestObjectResult(new
+            {
+                data = new { users = new User { } },
+                response = "Разделение страниц по отрицательным данным невозможно или страница не может быть нулевой!",
+                status = false
+            });
 
             double pageCount = Math.Round((double)users.Count() / onPage);
-            if (page > pageCount) return BadRequest($"Вы выбрали несуществующую страницу! При делении страниц по {onPage} объекта всего получилось {pageCount} страниц!");
+            if (page > pageCount) return new BadRequestObjectResult(new
+            {
+                data = new { users = new User { } },
+                response = $"Вы выбрали несуществующую страницу! При делении страниц по {onPage} объекта всего получилось {pageCount} страниц!",
+                status = false
+            }); ;
 
             var paginatedUsers = new List<User>();
             for (int i = 0; i < onPage;)
