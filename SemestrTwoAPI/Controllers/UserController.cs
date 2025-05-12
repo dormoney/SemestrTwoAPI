@@ -21,28 +21,14 @@ namespace SemestrTwoAPI.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromQuery] RegisterRequest request)
         {
-            var result = await _userService.Register(request);
-            if (!result) return BadRequest("Email already registered!");
-            return Ok("Successfully registered!");
+            return await _userService.Register(request);
         }
 
         [HttpGet("Login")]
         public async Task<IActionResult> Login([FromQuery] LoginRequest request)
         {
-            var token = await _userService.Login(request);
-            if (token == "false") return BadRequest("Failed to login! Check your email and password");
+            return await _userService.Login(request);
 
-            HttpContext.Response.Cookies.Append("jwt", token);
-            return Ok("Successfully logged in!");
-        }
-
-        [Authorize]
-        [HttpGet("Logout")]
-        public async Task<IActionResult> Logout()
-        {
-            HttpContext.Response.Cookies.Delete("jwt");
-
-            return Ok("Successfully logged out!");
         }
 
         [Authorize]
@@ -50,11 +36,7 @@ namespace SemestrTwoAPI.Controllers
         public async Task<IActionResult> UpdateAccount([FromQuery] UpdateRequest request)
         {
             var userId = User.FindFirst("Id")?.Value;
-            if (userId == null) return BadRequest("Чтобы обновить аккаунт нужно сначала авторизоваться");
-
-            var result = await _userService.UpdateAccount(userId, request);
-            if (!result) return BadRequest("Пользователь с таким ID не был найден либо не существует!");
-            return Ok("Account info successfuly updated!");
+            return await _userService.UpdateAccount(userId, request);
         }
 
         [Authorize]
@@ -62,11 +44,7 @@ namespace SemestrTwoAPI.Controllers
         public async Task<IActionResult> DeleteUser()
         {
             var userId = User.FindFirst("Id")?.Value;
-            if (userId == null) return BadRequest("Чтобы удалить аккаунт нужно сначала авторизоваться");
-
-            var result = await _userService.DeleteAccount(userId);
-            if (!result) return BadRequest("Пользователь с таким ID не был найден либо не существует!");
-            return Ok("You deleted an account( We wish to see you later!");
+            return await _userService.DeleteAccount(userId);
         }
     }
 }
