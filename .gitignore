@@ -408,3 +408,6 @@ SemestrTwoAPI/obj/Debug/net8.0/SemestrTwoAPI.csproj.AssemblyReference.cache
 SemestrTwoAPI/obj/Debug/net8.0/SemestrTwoAPI.assets.cache
 SemestrTwoAPI/obj/Debug/net8.0/SemestrTwoAPI.AssemblyInfoInputs.cache
 SemestrTwoAPI/obj/Debug/net8.0/SemestrTwoAPI.AssemblyInfo.cs
+SemestrTwoAPI/Migrations/20250514212228_first.cs
+SemestrTwoAPI/Migrations/ContextDBModelSnapshot.cs
+SemestrTwoAPI/Migrations/20250514212228_first.Designer.cs

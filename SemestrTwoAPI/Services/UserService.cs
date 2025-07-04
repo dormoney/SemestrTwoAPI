@@ -53,7 +53,7 @@ namespace SemestrTwoAPI.Services
                 for (int i = 0; i < onPage;)
                 {
                     if (page == 1) paginatedUsers.Add(users[i]);
-                    else
+                     else
                     {
                         if ((onPage * (page - 1) + i) < users.Count())
                         {
